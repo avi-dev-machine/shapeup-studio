@@ -1,0 +1,146 @@
+.section {
+  background: var(--color-bg-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: 250px;
+  grid-auto-flow: dense;
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  border-radius: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--transition-spring);
+}
+
+.card:nth-child(3n+1) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.card:nth-child(4n) {
+  grid-column: span 2;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card:hover .overlay {
+  opacity: 1;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+.caption {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 0 16px;
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--color-text-muted);
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  opacity: 0.3;
+}
+
+/* ── Lightbox ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10000;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background var(--transition-fast);
+}
+
+.closeBtn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.lightboxContent {
+  max-width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxMedia {
+  max-width: 100%;
+  max-height: 100vh;
+  object-fit: contain;
+}
+
+.lightboxCaption {
+  position: absolute;
+  bottom: 40px;
+  background: rgba(0,0,0,0.8);
+  padding: 12px 24px;
+  color: var(--color-primary);
+  font-family: var(--font-heading);
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+  text-align: center;
+}

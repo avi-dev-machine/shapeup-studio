@@ -1,0 +1,64 @@
+.section {
+  padding: 80px 0;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.statCard {
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-card);
+  border: 1px solid rgba(255,215,0,0.08);
+  transition: all var(--transition-smooth);
+}
+
+.statCard:hover {
+  border-color: rgba(255,215,0,0.3);
+  transform: translateY(-4px);
+  box-shadow: var(--glow-yellow);
+}
+
+.value {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.suffix {
+  font-family: var(--font-accent);
+  color: var(--color-primary);
+  text-shadow: var(--glow-text);
+}
+
+.label {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .statCard {
+    padding: 28px 16px;
+  }
+}

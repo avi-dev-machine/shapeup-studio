@@ -1,0 +1,82 @@
+.section {
+  background: var(--color-bg-secondary);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  text-align: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 24px;
+  background: #000;
+  border: 2px solid var(--color-border);
+  border-radius: 0;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: all var(--transition-smooth);
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+  box-shadow: var(--glow-yellow);
+}
+
+.branchImageWrapper {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.branchImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-spring);
+}
+
+.card:hover .branchImage {
+  transform: scale(1.05);
+}
+
+.icon {
+  font-size: 2.5rem;
+  margin-bottom: 4px;
+}
+
+.branchName {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  color: var(--color-primary);
+  text-shadow: var(--glow-text);
+}
+
+.address {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.mapLink {
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
