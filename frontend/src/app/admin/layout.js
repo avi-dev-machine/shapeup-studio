@@ -3,22 +3,52 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import styles from './admin.module.css';
 
+import { 
+  LayoutDashboard, 
+  Dumbbell, 
+  MapPin, 
+  Video, 
+  CreditCard, 
+  Image as ImageIcon, 
+  Star, 
+  User, 
+  Palette,
+  LogOut,
+  Menu
+} from 'lucide-react';
+
 const ADMIN_NAV = [
-  { label: 'Dashboard', href: '/admin', icon: '📊' },
-  { label: 'Trainers', href: '/admin/trainers', icon: '🏋️' },
-  { label: 'Branches', href: '/admin/branches', icon: '📍' },
-  { label: 'Pricing', href: '/admin/pricing', icon: '💰' },
-  { label: 'Gallery', href: '/admin/gallery', icon: '📷' },
-  { label: 'Reviews', href: '/admin/reviews', icon: '⭐' },
-  { label: 'Owner', href: '/admin/owner', icon: '👤' },
-  { label: 'Logo', href: '/admin/logo', icon: '🎨' },
+  { label: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={20} /> },
+  { label: 'Trainers', href: '/admin/trainers', icon: <Dumbbell size={20} /> },
+  { label: 'Branches', href: '/admin/branches', icon: <MapPin size={20} /> },
+  { label: 'Videos', href: '/admin/videos', icon: <Video size={20} /> },
+  { label: 'Pricing', href: '/admin/pricing', icon: <CreditCard size={20} /> },
+  { label: 'Gallery', href: '/admin/gallery', icon: <ImageIcon size={20} /> },
+  { label: 'Reviews', href: '/admin/reviews', icon: <Star size={20} /> },
+  { label: 'Owner', href: '/admin/owner', icon: <User size={20} /> },
+  { label: 'Logo', href: '/admin/logo', icon: <Palette size={20} /> },
 ];
 
 export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const [authenticated, setAuthenticated] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) setSidebarOpen(true);
+      else setSidebarOpen(false);
+    };
+    
+    // Initial check
+    handleResize();
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     // Skip auth check on login page
@@ -63,6 +93,7 @@ export default function AdminLayout({ children }) {
               key={item.href}
               href={item.href}
               className={`${styles.navLink} ${pathname === item.href ? styles.active : ''}`}
+              onClick={() => { if (isMobile) setSidebarOpen(false); }}
             >
               <span className={styles.navIcon}>{item.icon}</span>
               {item.label}
@@ -71,9 +102,17 @@ export default function AdminLayout({ children }) {
         </nav>
 
         <button onClick={handleLogout} className={styles.logoutBtn}>
-          🚪 Logout
+          <LogOut size={20} /> Logout
         </button>
       </aside>
+
+      {/* Backdrop overlay for mobile */}
+      {isMobile && sidebarOpen && (
+        <div 
+          className={styles.backdrop} 
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
       <main className={styles.main}>
         <header className={styles.topbar}>
@@ -81,7 +120,7 @@ export default function AdminLayout({ children }) {
             className={styles.menuToggle}
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
-            ☰
+            <Menu size={24} />
           </button>
           <h2 className={styles.pageTitle}>
             {ADMIN_NAV.find((n) => n.href === pathname)?.label || 'Admin'}

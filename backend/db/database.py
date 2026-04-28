@@ -40,7 +40,7 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 async def init_db():
     """Create all tables and seed initial data."""
-    from models import admin, trainer, owner, package, hours, review, gallery, branch, logo  # noqa
+    from models import admin, trainer, owner, package, hours, review, gallery, branch, logo, video  # noqa
     from core.security import hash_password
 
     async with engine.begin() as conn:

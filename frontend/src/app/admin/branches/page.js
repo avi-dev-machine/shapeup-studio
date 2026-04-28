@@ -62,12 +62,12 @@ export default function AdminBranches() {
   return (
     <div>
       <form onSubmit={handleSubmit} style={{ marginBottom: '32px', display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '600px' }}>
-        <div style={{ display: 'flex', gap: '16px' }}>
-          <div className="form-group" style={{ flex: 1 }}>
+        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+          <div className="form-group" style={{ flex: '1 1 200px' }}>
             <label>Branch Name</label>
             <input className="form-input" value={name} onChange={(e) => setName(e.target.value)} required placeholder="e.g., KASBA" />
           </div>
-          <div className="form-group" style={{ flex: 1 }}>
+          <div className="form-group" style={{ flex: '1 1 200px' }}>
             <label>Photo</label>
             <input type="file" accept="image/*" onChange={(e) => setPhotoFile(e.target.files[0])} className="form-input" />
           </div>

@@ -76,6 +76,9 @@ export const api = {
   // Logo
   getLogo: () => apiFetch('/logo'),
 
+  // Videos
+  getVideos: () => apiFetch('/videos'),
+
   // Health
   health: () => apiFetch('/health'),
 };
@@ -125,6 +128,14 @@ export const adminApi = {
     apiFetch(`/admin/branches/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteBranch: (id) =>
     apiFetch(`/admin/branches/${id}`, { method: 'DELETE' }),
+
+  // Videos
+  createVideo: (data) =>
+    apiFetch('/admin/videos', { method: 'POST', body: JSON.stringify(data) }),
+  updateVideo: (id, data) =>
+    apiFetch(`/admin/videos/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteVideo: (id) =>
+    apiFetch(`/admin/videos/${id}`, { method: 'DELETE' }),
 
   // Logo
   updateLogo: (logoUrl) =>

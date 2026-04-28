@@ -39,6 +39,38 @@
   font-size: 0.9rem;
   color: var(--color-text-secondary);
   line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 16px;
+}
+
+.socialLink {
+  color: var(--color-text);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.socialLink:hover:not(.disabled) {
+  color: var(--color-bg);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: var(--glow-yellow);
+}
+
+.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .column {

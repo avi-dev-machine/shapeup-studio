@@ -7,6 +7,7 @@ import PricingSection from '@/components/PricingSection';
 import Gallery from '@/components/Gallery';
 import ReviewSection from '@/components/ReviewSection';
 import BranchSection from '@/components/BranchSection';
+import VideoSection from '@/components/VideoSection';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         <OwnerSection />
         <TrainerMarquee />
         <PricingSection />
+        <VideoSection />
         <Gallery />
         <ReviewSection />
         <BranchSection />

@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { api, adminApi, getUploadUrl } from '@/utils/api';
+import { CheckCircle, XCircle, User } from 'lucide-react';
 
 export default function AdminTrainers() {
   const [trainers, setTrainers] = useState([]);
@@ -57,13 +58,13 @@ export default function AdminTrainers() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} style={{ marginBottom: '32px', display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'end' }}>
-        <div className="form-group" style={{ flex: 1, minWidth: '200px' }}>
+      <form onSubmit={handleSubmit} style={{ marginBottom: '32px', display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'end' }}>
+        <div className="form-group" style={{ flex: '1 1 200px' }}>
           <label>Trainer Name</label>
           <input className="form-input" value={name} onChange={(e) => setName(e.target.value)} required placeholder="Enter name" />
         </div>
-        <div className="form-group" style={{ minWidth: '200px' }}>
-          <label>Photo</label>
+        <div className="form-group" style={{ flex: '1 1 200px' }}>
+            <label>Photo</label>
           <input type="file" accept="image/*" onChange={(e) => setPhotoFile(e.target.files[0])} className="form-input" />
         </div>
         <div className="form-group" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -86,13 +87,13 @@ export default function AdminTrainers() {
             {t.photo_url ? (
               <img src={getUploadUrl(t.photo_url)} alt={t.name} style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover', margin: '0 auto 12px' }} />
             ) : (
-              <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--color-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontSize: '2rem', color: 'var(--color-primary)' }}>
-                {t.name.charAt(0)}
+              <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--color-surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', color: 'var(--color-primary)' }}>
+                <User size={32} />
               </div>
             )}
             <h4 style={{ marginBottom: '4px' }}>{t.name}</h4>
-            <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '12px' }}>
-              {t.is_in_marquee ? '✅ In Marquee' : '❌ Not in Marquee'}
+            <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}>
+              {t.is_in_marquee ? <><CheckCircle size={14} color="var(--color-primary)" /> In Marquee</> : <><XCircle size={14} color="var(--color-danger)" /> Not in Marquee</>}
             </p>
             <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
               <button className="btn btn-outline" style={{ padding: '6px 16px', fontSize: '0.8rem' }} onClick={() => handleEdit(t)}>Edit</button>
