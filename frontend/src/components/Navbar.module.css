@@ -24,9 +24,11 @@
 
 .logo {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 6px;
   text-decoration: none;
+  flex-shrink: 0;
+  margin-right: 16px;
 }
 
 .logoText {
@@ -47,16 +49,16 @@
 .links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
 }
 
 .link {
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
   color: var(--color-text-secondary);
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   transition: color var(--transition-fast);
   text-decoration: none;
 }

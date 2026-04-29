@@ -1,7 +1,9 @@
 'use client';
 import { PHONE_NUMBERS, EMAIL, EMAIL_LINK } from '@/utils/dialer';
 import { getWhatsAppEnquiryLink } from '@/utils/whatsapp';
+import { api, getUploadUrl } from '@/utils/api';
 import { Phone, Mail, MessageCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import styles from './Footer.module.css';
 
 const FacebookIcon = () => (
@@ -26,6 +28,16 @@ const YoutubeIcon = () => (
 );
 
 export default function Footer() {
+  const [logoUrl, setLogoUrl] = useState(null);
+
+  useEffect(() => {
+    api.getLogo().then((res) => {
+      if (res && res.logo_url) {
+        setLogoUrl(getUploadUrl(res.logo_url));
+      }
+    }).catch(console.error);
+  }, []);
+
   return (
     <footer className={styles.footer} id="contact">
       <div className={`container ${styles.container}`}>
@@ -33,8 +45,19 @@ export default function Footer() {
           {/* Brand */}
           <div className={styles.brand}>
             <div className={styles.logo}>
-              <span className={styles.logoText}>SHAPE</span>
-              <span className={styles.logoAccent}>UP</span>
+              {logoUrl && (
+                <img 
+                  src={logoUrl} 
+                  alt="Logo" 
+                  style={{ 
+                    width: '100%',
+                    maxWidth: '120px',
+                    height: 'auto',
+                    background: 'transparent',
+                    filter: 'drop-shadow(0 0 10px rgba(255, 215, 0, 0.3))' 
+                  }} 
+                />
+              )}
             </div>
             <p className={styles.tagline}>
               Your transformation starts here. Premium fitness. Professional trainers.
@@ -68,7 +91,7 @@ export default function Footer() {
             <h4 className={styles.columnTitle}>Contact Us</h4>
             {PHONE_NUMBERS.map((p) => (
               <a key={p.number} href={p.tel} className={styles.footerLink} style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-                <Phone size={14} /> {p.number}
+                <Phone size={14} /> <span><strong>{p.label}:</strong> {p.number}</span>
               </a>
             ))}
             <a href={EMAIL_LINK} className={styles.footerLink} style={{display: 'flex', alignItems: 'center', gap: '8px'}}>

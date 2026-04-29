@@ -1,7 +1,7 @@
 # Models package
 from .hours import GymHours, AdmissionCharge
-from .packages import Package
-from .trainers import Trainer
-from .branches import Branch
-from .videos import WorkoutVideo
+from .package import Package
+from .trainer import Trainer
+from .branch import Branch
+from .video import WorkoutVideo
 from .program import SpecialProgram

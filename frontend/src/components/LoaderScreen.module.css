@@ -1,0 +1,261 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Grid Scan Lines ── */
+.linesGrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.scanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(245, 255, 0, 0.15) 50%, transparent 100%);
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* ── Vertical Lines ── */
+.vertLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.vertLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(245, 255, 0, 0.08) 50%, transparent 100%);
+  transform-origin: top;
+  will-change: transform;
+}
+
+/* ── Corner Brackets ── */
+.corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+}
+
+.cornerTL { top: 32px; left: 32px; border-top: 2px solid #f5ff00; border-left: 2px solid #f5ff00; animation: cornerPulse 2s ease-in-out infinite; }
+.cornerTR { top: 32px; right: 32px; border-top: 2px solid #f5ff00; border-right: 2px solid #f5ff00; animation: cornerPulse 2s ease-in-out infinite 0.5s; }
+.cornerBL { bottom: 32px; left: 32px; border-bottom: 2px solid #f5ff00; border-left: 2px solid #f5ff00; animation: cornerPulse 2s ease-in-out infinite 1s; }
+.cornerBR { bottom: 32px; right: 32px; border-bottom: 2px solid #f5ff00; border-right: 2px solid #f5ff00; animation: cornerPulse 2s ease-in-out infinite 1.5s; }
+
+@keyframes cornerPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* ── Center Content ── */
+.center {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+/* ── Logo ── */
+.logoRow {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  perspective: 600px;
+}
+
+.letterSpacer {
+  width: 24px;
+}
+
+.letterWhite,
+.letterYellow {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 15vw, 11rem);
+  line-height: 1;
+  display: inline-block;
+  will-change: transform, opacity;
+  letter-spacing: 4px;
+}
+
+.letterWhite {
+  color: #fff;
+}
+
+.letterYellow {
+  color: #f5ff00;
+  text-shadow: 0 0 40px rgba(245, 255, 0, 0.7), 0 0 80px rgba(245, 255, 0, 0.3);
+}
+
+/* ── Tagline ── */
+.tagline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  white-space: nowrap;
+}
+
+/* ── Divider ── */
+.divider {
+  width: 320px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f5ff00, transparent);
+  transform-origin: center;
+  box-shadow: 0 0 12px rgba(245, 255, 0, 0.5);
+}
+
+/* ── Progress ── */
+.progressWrap {
+  width: min(420px, 80vw);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.07);
+  position: relative;
+  overflow: visible;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #f5ff00, #ffcc00);
+  transition: width 0.06s linear;
+  position: relative;
+  box-shadow: 0 0 10px rgba(245, 255, 0, 0.8);
+}
+
+.progressGlow {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 12px 4px rgba(245, 255, 0, 0.9);
+  transition: left 0.06s linear;
+}
+
+.progressMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progressStatus {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.progressNum {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f5ff00;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(245, 255, 0, 0.6);
+  font-variant-numeric: tabular-nums;
+  min-width: 52px;
+  text-align: right;
+}
+
+/* ── Reveal flash overlay ── */
+.revealFlash {
+  position: absolute;
+  inset: 0;
+  background: #f5ff00;
+  transform-origin: left;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* ── Ambient Orbs ── */
+.orb1 {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 255, 0, 0.06) 0%, transparent 70%);
+  top: -200px;
+  left: -200px;
+  animation: orbFloat 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.orb2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 255, 0, 0.04) 0%, transparent 70%);
+  bottom: -150px;
+  right: -100px;
+  animation: orbFloat 8s ease-in-out infinite reverse;
+  pointer-events: none;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -20px); }
+}
+
+/* ── Floating Particles ── */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: #f5ff00;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .cornerTL, .cornerTR, .cornerBL, .cornerBR {
+    width: 24px;
+    height: 24px;
+    top: 20px;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+  }
+  .cornerTR { right: 20px; }
+  .cornerBL { bottom: 20px; }
+  .cornerBR { right: 20px; bottom: 20px; }
+
+  .tagline {
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+  }
+
+  .divider {
+    width: 85vw;
+  }
+}

@@ -3,32 +3,38 @@
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-auto-rows: 250px;
-  grid-auto-flow: dense;
-  gap: 16px;
+  columns: 3;
+  column-gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .grid { columns: 2; }
+}
+
+@media (max-width: 480px) {
+  .grid { columns: 1; }
 }
 
 .card {
   position: relative;
-  border-radius: 0;
-  overflow: hidden;
+  break-inside: avoid;
+  margin-bottom: 16px;
   cursor: pointer;
-  transition: transform var(--transition-spring);
+  transition: box-shadow var(--transition-smooth), transform var(--transition-spring);
+  display: inline-block;
+  width: 100%;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.card:nth-child(3n+1) {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.card:nth-child(4n) {
-  grid-column: span 2;
-}
+.card:nth-child(3n+1) { /* reset old grid spans */ }
+.card:nth-child(4n) { /* reset old grid spans */ }
 
 .card:hover {
-  transform: scale(1.03);
+  border-color: #f5ff00;
+  box-shadow: 0 0 18px rgba(245, 255, 0, 0.55), 0 0 40px rgba(245, 255, 0, 0.2);
+  transform: translateY(-4px);
 }
 
 .card:hover .overlay {
@@ -37,8 +43,9 @@
 
 .media {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 .overlay {
