@@ -94,22 +94,35 @@
 @media (max-width: 768px) {
   .accordionWrapper {
     flex-direction: column;
-    height: 100vh;
+    height: auto;
+    min-height: unset;
+    max-height: unset;
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
   }
 
   .trainerSlice {
     border-right: none;
-    border-bottom: 2px solid var(--color-bg);
+    border-bottom: none;
+    height: 200px;
+    flex: unset;
+  }
+
+  .trainerSlice:hover {
+    flex: unset;
   }
 
   .trainerName {
     transform: rotate(0deg);
-    font-size: 2rem;
-    left: 20px;
+    font-size: 1.6rem;
+    left: 14px;
     bottom: 10px;
+    white-space: normal;
   }
 
   .trainerSlice:hover .trainerName {
-    font-size: 3rem;
+    font-size: 1.8rem;
   }
 }

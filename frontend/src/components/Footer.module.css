@@ -125,4 +125,13 @@
     grid-template-columns: 1fr;
     gap: 32px;
   }
+
+  .footerLink {
+    font-size: 0.8rem;
+    word-break: break-word;
+  }
+
+  .footer {
+    padding: 60px 0 24px;
+  }
 }

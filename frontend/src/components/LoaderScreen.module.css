@@ -250,12 +250,26 @@
   .cornerBL { bottom: 20px; }
   .cornerBR { right: 20px; bottom: 20px; }
 
+  .letterWhite,
+  .letterYellow {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+    letter-spacing: 2px;
+  }
+
+  .letterSpacer {
+    width: 12px;
+  }
+
   .tagline {
-    font-size: 0.55rem;
-    letter-spacing: 3px;
+    font-size: 0.48rem;
+    letter-spacing: 2px;
   }
 
   .divider {
+    width: 85vw;
+  }
+
+  .progressWrap {
     width: 85vw;
   }
 }
