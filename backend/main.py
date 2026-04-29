@@ -21,6 +21,7 @@ from api.branches import router as branches_router
 from api.logo import router as logo_router
 from api.upload import router as upload_router
 from api.videos import router as videos_router
+from api.programs import router as programs_router
 
 
 @asynccontextmanager
@@ -70,6 +71,7 @@ app.include_router(branches_router, prefix="/api")
 app.include_router(logo_router, prefix="/api")
 app.include_router(upload_router, prefix="/api")
 app.include_router(videos_router, prefix="/api")
+app.include_router(programs_router, prefix="/api")
 
 
 @app.get("/")

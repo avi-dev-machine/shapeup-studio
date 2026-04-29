@@ -79,6 +79,9 @@ export const api = {
   // Videos
   getVideos: () => apiFetch('/videos'),
 
+  // Programs
+  getPrograms: () => apiFetch('/programs'),
+
   // Health
   health: () => apiFetch('/health'),
 };
@@ -136,6 +139,22 @@ export const adminApi = {
     apiFetch(`/admin/videos/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   deleteVideo: (id) =>
     apiFetch(`/admin/videos/${id}`, { method: 'DELETE' }),
+
+  // Programs
+  createProgram: (data) =>
+    apiFetch('/admin/programs', { method: 'POST', body: JSON.stringify(data) }),
+  updateProgram: (id, data) =>
+    apiFetch(`/admin/programs/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteProgram: (id) =>
+    apiFetch(`/admin/programs/${id}`, { method: 'DELETE' }),
+
+  // Gym Hours
+  createGymHour: (data) =>
+    apiFetch('/admin/hours', { method: 'POST', body: JSON.stringify(data) }),
+  updateGymHour: (id, data) =>
+    apiFetch(`/admin/hours/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+  deleteGymHour: (id) =>
+    apiFetch(`/admin/hours/${id}`, { method: 'DELETE' }),
 
   // Logo
   updateLogo: (logoUrl) =>

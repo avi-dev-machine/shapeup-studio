@@ -8,6 +8,7 @@ import Gallery from '@/components/Gallery';
 import ReviewSection from '@/components/ReviewSection';
 import BranchSection from '@/components/BranchSection';
 import VideoSection from '@/components/VideoSection';
+import ProgramsSection from '@/components/ProgramsSection';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
         <StatsCounter />
         <OwnerSection />
         <TrainerMarquee />
+        <ProgramsSection />
         <PricingSection />
         <VideoSection />
         <Gallery />

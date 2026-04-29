@@ -5,24 +5,29 @@ import styles from './admin.module.css';
 
 import { 
   LayoutDashboard, 
+  Users, 
+  CreditCard, 
   Dumbbell, 
   MapPin, 
   Video, 
-  CreditCard, 
-  Image as ImageIcon, 
-  Star, 
-  User, 
-  Palette,
-  LogOut,
-  Menu
+  ListTodo, 
+  Clock, 
+  LogOut, 
+  Menu,
+  Image as ImageIcon,
+  Star,
+  User,
+  Palette
 } from 'lucide-react';
 
 const ADMIN_NAV = [
   { label: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={20} /> },
-  { label: 'Trainers', href: '/admin/trainers', icon: <Dumbbell size={20} /> },
-  { label: 'Branches', href: '/admin/branches', icon: <MapPin size={20} /> },
-  { label: 'Videos', href: '/admin/videos', icon: <Video size={20} /> },
+  { label: 'Trainers', href: '/admin/trainers', icon: <Users size={20} /> },
   { label: 'Pricing', href: '/admin/pricing', icon: <CreditCard size={20} /> },
+  { label: 'Branches', href: '/admin/branches', icon: <MapPin size={20} /> },
+  { label: 'Programs', href: '/admin/programs', icon: <ListTodo size={20} /> },
+  { label: 'Gym Hours', href: '/admin/hours', icon: <Clock size={20} /> },
+  { label: 'Videos', href: '/admin/videos', icon: <Video size={20} /> },
   { label: 'Gallery', href: '/admin/gallery', icon: <ImageIcon size={20} /> },
   { label: 'Reviews', href: '/admin/reviews', icon: <Star size={20} /> },
   { label: 'Owner', href: '/admin/owner', icon: <User size={20} /> },

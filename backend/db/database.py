@@ -101,7 +101,7 @@ async def init_db():
         if not existing_hours:
             hours_data = [
                 GymHours(slot_name="Morning", time_range="6:30 AM – 12:00 PM", is_highlighted=False),
-                GymHours(slot_name="Afternoon (Ladies Only)", time_range="12:00 PM – 5:00 PM", is_highlighted=True),
+                GymHours(slot_name="Afternoon (Ladies Only)", time_range="3:30 PM – 5:00 PM", is_highlighted=True),
                 GymHours(slot_name="Evening", time_range="5:00 PM – 11:00 PM", is_highlighted=False),
                 GymHours(slot_name="Closure", time_range="Sunday Evenings and Monday Mornings", is_highlighted=False),
             ]
@@ -161,5 +161,25 @@ async def init_db():
         if not existing_logo:
             logo = SiteLogo(logo_url="")
             session.add(logo)
+
+        # Seed Special Programs
+        from models.program import SpecialProgram
+
+        result = await session.execute(select(SpecialProgram))
+        existing_programs = result.scalars().all()
+
+        if not existing_programs:
+            programs = [
+                SpecialProgram(name="Stretching exercise special training", display_order=1),
+                SpecialProgram(name="Massage", display_order=2),
+                SpecialProgram(name="Kickboxing", display_order=3),
+                SpecialProgram(name="Yoga", display_order=4),
+                SpecialProgram(name="Medicine", display_order=5),
+                SpecialProgram(name="Physiotherapy", display_order=6),
+                SpecialProgram(name="Supplement", display_order=7),
+                SpecialProgram(name="Weight loss", display_order=8),
+                SpecialProgram(name="Weight gain", display_order=9),
+            ]
+            session.add_all(programs)
 
         await session.commit()

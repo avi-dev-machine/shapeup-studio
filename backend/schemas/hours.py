@@ -19,6 +19,12 @@ class GymHoursUpdate(BaseModel):
     is_highlighted: Optional[bool] = None
 
 
+class GymHoursCreate(BaseModel):
+    slot_name: str
+    time_range: str
+    is_highlighted: Optional[bool] = False
+
+
 class AdmissionChargeResponse(BaseModel):
     id: int
     description: str

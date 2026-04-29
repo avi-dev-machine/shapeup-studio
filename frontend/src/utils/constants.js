@@ -18,6 +18,8 @@ export const NAV_LINKS = [
   { label: 'About', href: '#about' },
   { label: 'Trainers', href: '#trainers' },
   { label: 'Pricing', href: '#pricing' },
+  { label: 'Videos', href: '#videos' },
+  { label: 'Programs', href: '#programs' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'Locations', href: '#locations' },

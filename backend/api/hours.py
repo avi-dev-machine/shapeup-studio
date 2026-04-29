@@ -6,7 +6,7 @@ from typing import List
 
 from db.database import get_db
 from models.hours import GymHours, AdmissionCharge
-from schemas.hours import GymHoursResponse, GymHoursUpdate, AdmissionChargeResponse, AdmissionChargeUpdate
+from schemas.hours import GymHoursResponse, GymHoursUpdate, GymHoursCreate, AdmissionChargeResponse, AdmissionChargeUpdate
 from core.security import get_current_admin
 
 router = APIRouter(tags=["Hours & Admission"])
@@ -44,6 +44,35 @@ async def update_hours(
     await db.flush()
     await db.refresh(hours)
     return hours
+
+
+@router.post("/admin/hours", response_model=GymHoursResponse)
+async def create_hours(
+    data: GymHoursCreate,
+    db: AsyncSession = Depends(get_db),
+    _admin: dict = Depends(get_current_admin),
+):
+    hours = GymHours(**data.model_dump())
+    db.add(hours)
+    await db.flush()
+    await db.refresh(hours)
+    return hours
+
+
+@router.delete("/admin/hours/{hour_id}")
+async def delete_hours(
+    hour_id: int,
+    db: AsyncSession = Depends(get_db),
+    _admin: dict = Depends(get_current_admin),
+):
+    result = await db.execute(select(GymHours).where(GymHours.id == hour_id))
+    hours = result.scalar_one_or_none()
+    if not hours:
+        raise HTTPException(status_code=404, detail="Gym hours slot not found")
+
+    await db.delete(hours)
+    await db.flush()
+    return {"status": "deleted"}
 
 
 @router.put("/admin/admission/{charge_id}", response_model=AdmissionChargeResponse)
