@@ -13,18 +13,19 @@ export default function TrainerMarquee() {
     }).catch(console.error);
   }, []);
 
-  // Limit trainers to 5 for the accordion to look right
-  const displayTrainers = trainers.slice(0, 5);
-
-  // Fallback if not enough trainers
-  const placeholdersNeeded = Math.max(0, 5 - displayTrainers.length);
+  // Always maintain at least 5 slots in the base list
+  const minSlots = 5;
+  const placeholdersNeeded = Math.max(0, minSlots - trainers.length);
   const placeholders = [...Array(placeholdersNeeded)].map((_, i) => ({
     id: `placeholder-${i}`,
     name: 'TRAINER',
     photo_url: null
   }));
 
-  const finalTrainers = [...displayTrainers, ...placeholders];
+  const baseList = [...trainers, ...placeholders];
+  
+  // Duplicate for seamless loop (2 sets for 50% scroll)
+  const marqueeList = [...baseList, ...baseList];
 
   return (
     <section className={`section ${styles.section}`} id="trainers">
@@ -33,24 +34,26 @@ export default function TrainerMarquee() {
         <div className="accent-line"></div>
       </div>
 
-      <div className={styles.accordionWrapper}>
-        {finalTrainers.map((trainer, i) => (
-          <div key={trainer.id} className={styles.trainerSlice}>
-            {trainer.photo_url ? (
-              <img
-                src={getUploadUrl(trainer.photo_url)}
-                alt={trainer.name}
-                className={styles.trainerImage}
-              />
-            ) : (
-              <div className={styles.imagePlaceholder}>
-                <span>{trainer.name.charAt(0)}</span>
-              </div>
-            )}
-            <div className={styles.sliceOverlay}></div>
-            <span className={styles.trainerName}>{trainer.name}</span>
-          </div>
-        ))}
+      <div className={styles.marqueeContainer}>
+        <div className={styles.marqueeContent}>
+          {marqueeList.map((trainer, i) => (
+            <div key={`${trainer.id}-${i}`} className={styles.trainerSlice}>
+              {trainer.photo_url ? (
+                <img
+                  src={getUploadUrl(trainer.photo_url)}
+                  alt={trainer.name}
+                  className={styles.trainerImage}
+                />
+              ) : (
+                <div className={styles.imagePlaceholder}>
+                  <span>{trainer.name.charAt(0)}</span>
+                </div>
+              )}
+              <div className={styles.sliceOverlay}></div>
+              <span className={styles.trainerName}>{trainer.name}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,30 +1,42 @@
 .section {
   background: var(--color-bg);
-  padding-bottom: 0;
+  padding: 100px 0 0;
+  overflow: hidden;
 }
 
-.accordionWrapper {
-  display: flex;
+.marqueeContainer {
   width: 100%;
-  height: 70vh;
-  min-height: 500px;
-  max-height: 800px;
+  margin-top: 60px;
+  position: relative;
+  display: flex;
+}
+
+.marqueeContent {
+  display: flex;
   gap: 0;
+  animation: marquee 30s linear infinite;
+  height: 60vh;
+  min-height: 400px;
+  max-height: 700px;
+  will-change: transform;
+}
+
+.marqueeContent:hover {
+  animation-play-state: paused;
 }
 
 .trainerSlice {
   position: relative;
-  flex: 1;
+  width: 200px;
+  flex-shrink: 0;
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   cursor: pointer;
-  filter: grayscale(100%) contrast(1.2);
   border-right: 2px solid var(--color-bg);
 }
 
 .trainerSlice:hover {
-  flex: 5;
-  filter: grayscale(0%) contrast(1.1);
+  width: 450px;
   box-shadow: inset 0 0 100px rgba(245, 255, 0, 0.2);
 }
 
@@ -32,10 +44,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: grayscale(100%) contrast(1.2);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .trainerSlice:hover .trainerImage {
+  filter: grayscale(0%) contrast(1.1);
   transform: scale(1.05);
 }
 
@@ -72,9 +86,10 @@
   bottom: 30px;
   left: 30px;
   font-family: var(--font-heading);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   color: transparent;
-  -webkit-text-stroke: 1px var(--color-text-muted);
+  -webkit-text-stroke: 1.5px var(--color-primary);
+  text-shadow: 0 0 15px rgba(245, 255, 0, 0.4);
   white-space: nowrap;
   transform-origin: left bottom;
   transform: rotate(-90deg) translate(20px, 100%);
@@ -87,42 +102,37 @@
   color: var(--color-primary);
   -webkit-text-stroke: 0;
   text-shadow: var(--glow-yellow);
-  font-size: 5rem;
+  font-size: 4rem;
   letter-spacing: 5px;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @media (max-width: 768px) {
-  .accordionWrapper {
-    flex-direction: column;
-    height: auto;
-    min-height: unset;
-    max-height: unset;
-    flex-wrap: wrap;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
+  .marqueeContent {
+    height: 50vh;
   }
-
+  
   .trainerSlice {
-    border-right: none;
-    border-bottom: none;
-    height: 200px;
-    flex: unset;
+    width: 160px;
   }
-
+  
   .trainerSlice:hover {
-    flex: unset;
+    width: 250px;
   }
 
   .trainerName {
-    transform: rotate(0deg);
-    font-size: 1.6rem;
-    left: 14px;
-    bottom: 10px;
-    white-space: normal;
-  }
-
-  .trainerSlice:hover .trainerName {
     font-size: 1.8rem;
+  }
+  
+  .trainerSlice:hover .trainerName {
+    font-size: 2.5rem;
   }
 }
