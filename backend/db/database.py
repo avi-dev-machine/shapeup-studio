@@ -7,19 +7,19 @@ from typing import AsyncGenerator
 
 from core.config import settings
 
-# Handle Database URL (Turso or local SQLite)
+# Handle Database URL
 db_url = settings.DATABASE_URL
-if settings.TURSO_URL:
-    # Turso uses the sqlite+libsql driver
-    # The URL usually starts with libsql://, we need to convert it to sqlite+libsql://
-    url = settings.TURSO_URL.replace("libsql://", "sqlite+libsql://")
-    db_url = f"{url}?auth_token={settings.TURSO_AUTH_TOKEN}"
+
+# If using PostgreSQL (Supabase), ensure we use the asyncpg driver
+if db_url.startswith("postgresql://"):
+    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://")
 
 # Async engine
 engine = create_async_engine(
     db_url,
     echo=settings.DEBUG,
-    connect_args={"check_same_thread": False} if "sqlite" in db_url and "libsql" not in db_url else {},
+    # SQLite needs check_same_thread=False, Postgres doesn't
+    connect_args={"check_same_thread": False} if "sqlite" in db_url else {},
 )
 
 # Async session factory

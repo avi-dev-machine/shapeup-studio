@@ -14,8 +14,6 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./shapeup.db"
-    TURSO_URL: str = ""
-    TURSO_AUTH_TOKEN: str = ""
 
     # JWT
     JWT_SECRET_KEY: str = "shapeup-super-secret-key-change-in-production-2024"
