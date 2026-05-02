@@ -14,6 +14,9 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./shapeup.db"
+    CLOUDINARY_CLOUD_NAME: str = ""
+    CLOUDINARY_API_KEY: str = ""
+    CLOUDINARY_API_SECRET: str = ""
 
     # JWT
     JWT_SECRET_KEY: str = "shapeup-super-secret-key-change-in-production-2024"

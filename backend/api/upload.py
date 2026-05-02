@@ -26,6 +26,30 @@ async def upload_file(
     if len(contents) > settings.MAX_UPLOAD_SIZE:
         raise HTTPException(status_code=413, detail="File too large (max 10MB)")
 
+    # If Cloudinary is configured, use it for persistent storage
+    if settings.CLOUDINARY_CLOUD_NAME and settings.CLOUDINARY_API_KEY:
+        import cloudinary
+        import cloudinary.uploader
+
+        cloudinary.config(
+            cloud_name=settings.CLOUDINARY_CLOUD_NAME,
+            api_key=settings.CLOUDINARY_API_KEY,
+            api_secret=settings.CLOUDINARY_API_SECRET,
+            secure=True
+        )
+        
+        try:
+            # Upload to Cloudinary
+            upload_result = cloudinary.uploader.upload(contents, folder="shapeup")
+            url = upload_result.get("secure_url")
+            filename = upload_result.get("original_filename", "upload")
+            return UploadResponse(url=url, filename=filename)
+        except Exception as e:
+            print(f"Cloudinary upload error: {e}")
+            # Fallback to local if Cloudinary fails (not ideal for persistence but prevents 500)
+            pass
+
+    # Fallback to local storage (ephemeral on Render)
     # Generate unique filename
     ext = os.path.splitext(file.filename or "upload")[1] or ".jpg"
     unique_name = f"{uuid.uuid4().hex}{ext}"
