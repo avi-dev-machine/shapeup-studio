@@ -56,8 +56,8 @@ else:
         allow_headers=["*"],
     )
 
-# Static file serving for uploads
-app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
+# Static file serving for uploads - REMOVED (Using Cloudinary only)
+# app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
 
 # Register routers under /api prefix
 app.include_router(auth_router, prefix="/api")

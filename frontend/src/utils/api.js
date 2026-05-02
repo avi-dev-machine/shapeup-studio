@@ -170,7 +170,8 @@ export const adminApi = {
 
 export const getUploadUrl = (path) => {
   if (!path) return '';
+  // Only allow full URLs (Cloudinary)
   if (path.startsWith('http')) return path;
-  const base = process.env.NEXT_PUBLIC_API_URL?.replace('/api', '') || 'http://localhost:8000';
-  return `${base}${path}`;
+  // Ignore any local /uploads/ paths as they are dead on Render
+  return '';
 };
