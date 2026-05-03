@@ -79,6 +79,11 @@ async def root():
     return {"message": "SHAPE UP API is running", "docs": "/docs"}
 
 
+@app.head("/")
+async def head_root():
+    return {"message": "SHAPE UP API is running"}
+
+
 @app.get("/api/health")
 async def health():
     return {"status": "healthy"}
