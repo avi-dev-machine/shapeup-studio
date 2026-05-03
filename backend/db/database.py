@@ -4,7 +4,6 @@ Async database engine, session management, and initialization.
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
-import ssl
 from typing import AsyncGenerator
 
 from core.config import settings
@@ -23,22 +22,17 @@ connect_args = {}
 if "sqlite" in db_url:
     connect_args["check_same_thread"] = False
 else:
-    # Required for Render / PgBouncer
+    # 🔥 CRITICAL FIXES for Render / PgBouncer
     connect_args["statement_cache_size"] = 0
-    
-    # Render uses self-signed certificates, so we need to disable verification
-    ssl_context = ssl.create_default_context()
-    ssl_context.check_hostname = False
-    ssl_context.verify_mode = ssl.CERT_NONE
-    connect_args["ssl"] = ssl_context
+    connect_args["prepared_statement_cache_size"] = 0
 
 # Async engine
 engine = create_async_engine(
     db_url,
     echo=settings.DEBUG,
+    poolclass=NullPool,
     connect_args=connect_args,
     pool_pre_ping=True,
-    poolclass=NullPool,
 )
 
 # Async session factory
