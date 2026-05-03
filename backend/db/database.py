@@ -25,6 +25,7 @@ if "sqlite" in db_url:
 else:
     # Required for Render / PgBouncer
     connect_args["statement_cache_size"] = 0
+    connect_args["prepared_statement_cache_size"] = 0
     
     # Render uses self-signed certificates, so we need to disable verification
     ssl_context = ssl.create_default_context()
