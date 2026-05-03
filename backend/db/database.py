@@ -3,6 +3,7 @@ Async database engine, session management, and initialization.
 """
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.pool import NullPool
 from typing import AsyncGenerator
 
 from core.config import settings
@@ -31,7 +32,7 @@ engine = create_async_engine(
     echo=settings.DEBUG,
     connect_args=connect_args,
     pool_pre_ping=True,  # Help handle disconnected pool connections
-    prepared_statement_cache_size=0,  # Disable statement caching at the SQLAlchemy dialect level
+    poolclass=NullPool,  # Recommended for PgBouncer/Supabase to avoid pool conflicts
 )
 
 # Async session factory
