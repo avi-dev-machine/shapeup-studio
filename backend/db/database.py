@@ -24,7 +24,7 @@ if "sqlite" in db_url:
 else:
     # Required for Render / PgBouncer
     connect_args["statement_cache_size"] = 0
-    connect_args["ssl"] = "require"
+    connect_args["ssl"] = True
 
 # Async engine
 engine = create_async_engine(
