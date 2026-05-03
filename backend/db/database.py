@@ -25,7 +25,6 @@ if "sqlite" in db_url:
 else:
     # Required for Render / PgBouncer
     connect_args["statement_cache_size"] = 0
-    connect_args["prepared_statement_cache_size"] = 0
     
     # Render uses self-signed certificates, so we need to disable verification
     ssl_context = ssl.create_default_context()
@@ -40,7 +39,6 @@ engine = create_async_engine(
     connect_args=connect_args,
     pool_pre_ping=True,
     poolclass=NullPool,
-    pool_recycle=300,  # prevents stale connections
 )
 
 # Async session factory
@@ -69,16 +67,16 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
 
 async def init_db():
     """Create all tables and seed initial data."""
-    print("Initializing database...")
+    print(f"Initializing database... DB URL: {db_url}")
     from models import admin, trainer, owner, package, hours, review, gallery, branch, logo, video  # noqa
     from core.security import hash_password
 
     try:
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
-        print("Database tables created successfully.")
+        print("✅ Tables created successfully.")
     except Exception as e:
-        print(f"Error creating database tables: {e}")
+        print(f"❌ DB INIT FAILED: {e}")
         raise
 
     # Seed admin user if not exists
