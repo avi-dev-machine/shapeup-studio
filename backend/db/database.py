@@ -19,7 +19,7 @@ engine = create_async_engine(
     db_url,
     echo=settings.DEBUG,
     # SQLite needs check_same_thread=False, Postgres doesn't
-    connect_args={"check_same_thread": False} if "sqlite" in db_url else {},
+    connect_args={"check_same_thread": False} if "sqlite" in db_url else {"statement_cache_size": 0},
 )
 
 # Async session factory
