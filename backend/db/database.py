@@ -10,16 +10,28 @@ from core.config import settings
 # Handle Database URL
 db_url = settings.DATABASE_URL
 
-# If using PostgreSQL (Supabase), ensure we use the asyncpg driver
-if db_url.startswith("postgresql://"):
-    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://")
+# Robust URL handling for PostgreSQL (Render/Heroku often use postgres://)
+if db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql+asyncpg://", 1)
+elif db_url.startswith("postgresql://") and "+asyncpg" not in db_url:
+    db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
+# Configure engine arguments
+connect_args = {}
+if "sqlite" in db_url:
+    connect_args["check_same_thread"] = False
+else:
+    # Essential for PgBouncer in transaction mode (common on Render/Supabase)
+    # This disables the prepared statement cache which causes DuplicatePreparedStatementError
+    connect_args["statement_cache_size"] = 0
 
 # Async engine
 engine = create_async_engine(
     db_url,
     echo=settings.DEBUG,
-    # SQLite needs check_same_thread=False, Postgres doesn't
-    connect_args={"check_same_thread": False} if "sqlite" in db_url else {"statement_cache_size": 0},
+    connect_args=connect_args,
+    pool_pre_ping=True,  # Help handle disconnected pool connections
+    prepared_statement_cache_size=0,  # Disable statement caching at the SQLAlchemy dialect level
 )
 
 # Async session factory
