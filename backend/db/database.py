@@ -17,18 +17,14 @@ if db_url.startswith("postgres://"):
 elif db_url.startswith("postgresql://") and "+asyncpg" not in db_url:
     db_url = db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
 
-# Function to force anonymous prepared statements (required for PgBouncer in transaction mode)
-def _prepare_statement_name(name):
-    return None
-
 # Configure engine arguments
 connect_args = {}
 if "sqlite" in db_url:
     connect_args["check_same_thread"] = False
 else:
-    # Essential for PgBouncer / Render / Supabase
+    # Required for Render / PgBouncer
     connect_args["statement_cache_size"] = 0
-    connect_args["prepared_statement_name_func"] = _prepare_statement_name
+    connect_args["ssl"] = "require"
 
 # Async engine
 engine = create_async_engine(
@@ -37,6 +33,7 @@ engine = create_async_engine(
     connect_args=connect_args,
     pool_pre_ping=True,
     poolclass=NullPool,
+    pool_recycle=300,  # prevents stale connections
 )
 
 # Async session factory
