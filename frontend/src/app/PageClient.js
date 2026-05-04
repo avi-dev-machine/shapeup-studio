@@ -6,6 +6,7 @@ import Hero from '@/components/Hero';
 import StatsCounter from '@/components/StatsCounter';
 import OwnerSection from '@/components/OwnerSection';
 import TrainerMarquee from '@/components/TrainerMarquee';
+import CertificationsSection from '@/components/CertificationsSection';
 import PricingSection from '@/components/PricingSection';
 import Gallery from '@/components/Gallery';
 import ReviewSection from '@/components/ReviewSection';
@@ -34,6 +35,7 @@ export default function PageClient() {
           <StatsCounter />
           <OwnerSection />
           <TrainerMarquee />
+          <CertificationsSection />
           <ProgramsSection />
           <PricingSection />
           <VideoSection />
