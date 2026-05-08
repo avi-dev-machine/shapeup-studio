@@ -11,4 +11,4 @@ class Review(Base):
     author_name = Column(String(255), nullable=False)
     rating = Column(Integer, nullable=False)  # 1-5 stars
     comment = Column(Text, default="")
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=datetime.utcnow)

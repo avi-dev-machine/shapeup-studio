@@ -11,6 +11,8 @@ from core.config import settings
 # Handle Database URL
 db_url = settings.DATABASE_URL
 
+import uuid
+
 # Robust URL handling for PostgreSQL (Render/Heroku often use postgres://)
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql+asyncpg://", 1)
@@ -25,6 +27,7 @@ else:
     # 🔥 CRITICAL FIXES for Render / PgBouncer
     connect_args["statement_cache_size"] = 0
     connect_args["prepared_statement_cache_size"] = 0
+    connect_args["prepared_statement_name_func"] = lambda: f"__asyncpg_{uuid.uuid4()}__"
 
 # Async engine
 engine = create_async_engine(
