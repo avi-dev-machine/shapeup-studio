@@ -1,3 +1,4 @@
+# Heartbeat rebuild: 2026-05-08
 """
 SHAPE UP — FastAPI Backend Entry Point
 """
