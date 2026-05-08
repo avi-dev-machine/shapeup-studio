@@ -35,6 +35,7 @@ export default function ReviewSection() {
       setTimeout(() => setSubmitted(false), 3000);
     } catch (err) {
       console.error(err);
+      alert('Error submitting review. Please try again.');
     } finally {
       setSubmitting(false);
     }

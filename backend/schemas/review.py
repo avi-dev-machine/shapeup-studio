@@ -16,6 +16,7 @@ class ReviewResponse(BaseModel):
     rating: int
     comment: str
     created_at: datetime
+    is_approved: int
 
     class Config:
         from_attributes = True

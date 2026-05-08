@@ -12,3 +12,4 @@ class Review(Base):
     rating = Column(Integer, nullable=False)  # 1-5 stars
     comment = Column(Text, default="")
     created_at = Column(DateTime, default=datetime.utcnow)
+    is_approved = Column(Integer, default=1)  # Auto-approved by default

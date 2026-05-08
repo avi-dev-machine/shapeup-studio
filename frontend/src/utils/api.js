@@ -115,6 +115,9 @@ export const adminApi = {
     apiFetch(`/admin/admission/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
 
   // Reviews
+  getAllReviews: () => apiFetch('/admin/reviews'),
+  approveReview: (id) =>
+    apiFetch(`/admin/reviews/${id}/approve`, { method: 'PATCH' }),
   deleteReview: (id) =>
     apiFetch(`/admin/reviews/${id}`, { method: 'DELETE' }),
 

@@ -1,6 +1,7 @@
 """
 Async database engine, session management, and initialization.
 """
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.pool import NullPool
@@ -27,7 +28,7 @@ else:
     # 🔥 CRITICAL FIXES for Render / PgBouncer
     connect_args["statement_cache_size"] = 0
     connect_args["prepared_statement_cache_size"] = 0
-    connect_args["prepared_statement_name_func"] = lambda: f"__asyncpg_{uuid.uuid4()}__"
+    connect_args["prepared_statement_name_func"] = lambda: f"__asyncpg_{uuid.uuid4().hex}__"
 
 # Async engine
 engine = create_async_engine(
@@ -71,6 +72,11 @@ async def init_db():
     try:
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
+            # 🔥 MANUAL MIGRATION: Ensure is_approved column exists
+            try:
+                await conn.execute(text("ALTER TABLE reviews ADD COLUMN IF NOT EXISTS is_approved INTEGER DEFAULT 0;"))
+            except Exception:
+                pass 
         print("✅ Tables created successfully.")
     except Exception as e:
         print(f"❌ DB INIT FAILED: {e}")

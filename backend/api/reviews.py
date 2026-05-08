@@ -15,7 +15,10 @@ router = APIRouter(tags=["Reviews"])
 @router.get("/reviews", response_model=List[ReviewResponse])
 async def list_reviews(db: AsyncSession = Depends(get_db)):
     """List all reviews, newest first."""
-    result = await db.execute(select(Review).order_by(Review.created_at.desc()))
+    result = await db.execute(
+        select(Review)
+        .order_by(Review.created_at.desc())
+    )
     return result.scalars().all()
 
 
@@ -41,3 +44,30 @@ async def delete_review(
     if not review:
         raise HTTPException(status_code=404, detail="Review not found")
     await db.delete(review)
+
+
+@router.get("/admin/reviews", response_model=List[ReviewResponse])
+async def list_all_reviews(
+    db: AsyncSession = Depends(get_db),
+    _admin: dict = Depends(get_current_admin),
+):
+    """Admin: list all reviews (pending and approved)."""
+    result = await db.execute(select(Review).order_by(Review.created_at.desc()))
+    return result.scalars().all()
+
+
+@router.patch("/admin/reviews/{review_id}/approve", response_model=ReviewResponse)
+async def approve_review(
+    review_id: int,
+    db: AsyncSession = Depends(get_db),
+    _admin: dict = Depends(get_current_admin),
+):
+    """Admin: approve a review."""
+    result = await db.execute(select(Review).where(Review.id == review_id))
+    review = result.scalar_one_or_none()
+    if not review:
+        raise HTTPException(status_code=404, detail="Review not found")
+    review.is_approved = 1
+    await db.commit()
+    await db.refresh(review)
+    return review
